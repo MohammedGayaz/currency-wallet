@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const {DB_URL} = require("../config")
+const {DB_URL} = require("../config");
 
 mongoose.connect(DB_URL)
 
@@ -12,18 +12,19 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         unique: true,
         minLength: 6,
-        maxLength: 12,
         lowercase: true,
     },
     firstName : {
         type : String,
         require : true,
         trim : true,
+        lowercase: true,
     },
     lastName : {
         type : String,
         require : true,
         trim : true,
+        lowercase: true,
     },
     password : {
         type : String,
@@ -34,9 +35,25 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-const User = mongoose.model("User", UserSchema, "users")
+// accoutn for user
+
+const AccountSchema = new mongoose.Schema({
+    userId : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "User",
+        require : true,
+    },
+    balance : {
+        type : Number,
+        require : true
+    }
+})
+
+const User = mongoose.model("User", UserSchema)
+const Account = mongoose.model("Account", AccountSchema)
 
 
 module.exports = {
-    User
+    User,
+    Account
 }
