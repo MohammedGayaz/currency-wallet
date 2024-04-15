@@ -3,6 +3,7 @@ import Appbar from "../components/Appbar";
 import Balance from "../components/Balance";
 import Users from "../components/Users";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Dashborad() {
   const [users, setUsers] = useState([]);
@@ -45,7 +46,7 @@ function Dashborad() {
 
   return (
     <div className="p-10">
-      <Appbar title={"PayTM APP"} name={self.firstname + " " + self.lastname} />
+      <Appbar title={"PayTM APP"} name={self.firstname} />
       <Balance balance={self.balance} />
       <Users users={users} setFilter={setFilter} />
     </div>
