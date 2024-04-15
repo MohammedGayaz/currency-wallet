@@ -8,8 +8,9 @@ const Account = require("../models/accountDB");
 const registerUser = async (req, res) => {
   try {
     // Validate user input
-    const { success, errors } = registerSchema.safeParse(req.body);
-    if (!success) return res.status(422).json({ error: errors[0].message });
+    const { success, error } = registerSchema.safeParse(req.body);
+    if (!success)
+      return res.status(422).json({ error: error.errors[0].message });
 
     // check if user exists
     const user = await User.findOne({ username: req.body.username });
@@ -27,7 +28,7 @@ const registerUser = async (req, res) => {
     //initilizing account balance
     await Account.create({
       userId: newUser._id,
-      balance: Math.round(Math.random() * 1000 + 1),
+      balance: Math.round(Math.random() * 10000 + 1),
     });
 
     return res.status(200).json({ success: "User created successfully" });

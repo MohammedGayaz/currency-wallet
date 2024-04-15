@@ -1,4 +1,5 @@
 const { passwordHash } = require("../helper");
+const Account = require("../models/accountDB");
 const User = require("../models/userDB");
 const updateSchema = require("../validation/user/update");
 
@@ -42,7 +43,23 @@ const findUser = async (req, res) => {
   }
 };
 
+const selfData = async (req, res) => {
+  const selfAccount = await Account.findOne({ userId: req.user._id });
+  try {
+    return res.status(200).json({
+      id: req.user._id,
+      username: req.user.username,
+      firstname: req.user.firstname,
+      lastname: req.user.lastname,
+      balance: selfAccount.balance,
+    });
+  } catch (err) {
+    return res.status(500).json({ error: "Internal server problem" });
+  }
+};
+
 module.exports = {
   updateUser,
   findUser,
+  selfData,
 };

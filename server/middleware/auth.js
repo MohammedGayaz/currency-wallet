@@ -4,7 +4,8 @@ const User = require("../models/userDB");
 
 const authMiddleware = async (req, res, next) => {
   try {
-    const token = req.cookies["auth-token"];
+    // const token = req.cookies["auth-token"];
+    const token = req.headers["authorization"];
     if (!token) return res.status(401).json({ error: "invalid token" });
 
     const decode = jwt.verify(token, JWT_SECRET);

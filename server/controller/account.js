@@ -53,7 +53,7 @@ const transferAmmount = async (req, res) => {
     await session.commitTransaction();
 
     res.json({
-      message: "Transfer successful",
+      success: "Transfer successful",
     });
   } catch (err) {
     console.error("Error in transferAmount:", err);
